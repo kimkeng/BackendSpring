@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>ECMA_Script Class(선언식)</title>
+</head>
+<body>
+
+</body>
+<script>
+	class abc{
+		aaa(){
+			console.log("aaa method");
+		}
+		bbb(){
+			console.log("bbb method");
+		}
+	}
+</script>
+</html>
