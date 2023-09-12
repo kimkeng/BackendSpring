@@ -1,0 +1,21 @@
+package sp1;
+
+import java.sql.Connection;
+import java.util.ArrayList;
+
+import com.mysql.fabric.xmlrpc.base.Array;
+
+public class product_modify {
+	Connection con = null;
+	public product_modify() {
+		try {
+			this.con = dbconfig.info();
+		}catch(Exception e) {
+			System.out.println("오류");
+		}
+	}
+	private ArrayList<String> pd(){
+		
+		return null;
+	}
+}

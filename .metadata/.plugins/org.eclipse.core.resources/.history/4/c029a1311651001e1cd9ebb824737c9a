@@ -1,0 +1,32 @@
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Scanner;
+
+public class serber {
+
+	public static void main(String[] args) {
+		new chat().chatserver();
+
+	}
+
+}
+class chat{
+	private int port = 8009;
+	ServerSocket sk = null;
+	Socket so = null;
+	Scanner sc = null;
+	OutputStream os = null;
+	String mid = null;
+	String msg = null;
+	String cmsg = null;
+	String check = null;
+	
+	public void chatserver() {
+		try {
+			this.sk = new ServerSocket(this.port);
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+	}
+}

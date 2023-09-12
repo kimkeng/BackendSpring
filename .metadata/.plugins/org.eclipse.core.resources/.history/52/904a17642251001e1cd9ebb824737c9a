@@ -1,0 +1,43 @@
+//Thread 활용
+import java.net.ServerSocket;
+import java.net.Socket;
+public class server3 {
+
+	public static void main(String[] args) {
+		server3 sv = new server3();
+		sv.start();
+	}
+	//Socket을 open하는 역활 (접속환경)
+	public void start() {
+		ServerSocket serverSocket = null;		
+		Socket socket = null;
+		try {
+			serverSocket = new ServerSocket(8000);
+			System.out.println("[채팅 서버 오픈]");
+			while(true) {
+				socket = serverSocket.accept();
+				//client 접속마다 새로운 Thread를 생성
+				chatroom chatroom = new chatroom(socket);
+			}
+		}catch(Exception e) {
+			
+		}
+	}
+}
+
+//접속자 현황을 setting해서 Thread로 관리
+
+
+class chatroom extends Thread{
+	
+	//즉시실행
+	public chatroom() {
+		
+	}
+	
+	@Override
+	public void run() {
+		
+		super.run();
+	}
+}

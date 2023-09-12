@@ -1,0 +1,59 @@
+package sp1;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.web.servlet.mvc.condition.ProducesRequestCondition;
+
+
+
+
+public class product_list {
+	Connection co = null;
+	//databases 연결
+	public product_list() {
+		try {
+			this.co = new dbconfig().info();
+			System.out.println(this.co);
+		}catch(Exception e) {
+			System.out.println("DB접속 오류!!");
+		}
+	}
+	//DTO와 관계없는 데이터 갯수를 파악
+	public int data_ea() {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int ea = 0;
+		try {
+			String sql = "select count(*) as cnt from product";
+			ps = this.co.prepareStatement(sql);
+			rs = this.ps.executeQuery();
+			ea = rs.getInt("cnt");
+		}catch(Exception e) {
+			System.out.println("db오류");
+		}
+		return ea;
+	}
+	
+	//DTO와 연결하여 Database에 있는 값을 2차원 배열로 만드는 작업
+	public ArrayList<ArrayList<String>> list_data(){
+		ResultSet rs = null;
+		PreparedStatement ps = null;
+		product_list pl = new product_list();
+		try {
+			
+			
+			String sql = "select * from product order by pidx desc";
+			ps = this.co.prepareStatement(sql);
+			rs = ps.executeQuery();
+			rs.next();
+			this.co.close();
+		}catch(Exception e) {
+			System.out.println("Database 컬럼 및 dto 오류 발생!!");
+		}
+		return null;
+	}
+}

@@ -1,0 +1,18 @@
+import java.net.ServerSocket;
+
+public class serber {
+
+	public static void main(String[] args) {
+		new chat().chatserver();
+
+	}
+
+}
+class chat{
+	private int port = 8009;
+	ServerSocket sk = null;
+	
+	public void chatserver() {
+		
+	}
+}

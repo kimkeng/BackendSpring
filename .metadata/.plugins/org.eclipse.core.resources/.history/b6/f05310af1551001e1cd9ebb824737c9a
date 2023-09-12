@@ -1,0 +1,12 @@
+
+public class serber {
+
+	public static void main(String[] args) {
+		new chat()
+
+	}
+
+}
+class chat{
+	
+}
