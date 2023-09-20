@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 public class product_ok {
 	Connection con = null;
 	
+	
 	public void dbcon() { //즉시실행
 		try {
 			this.con = dbconfig.info(); 

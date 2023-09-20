@@ -1,9 +1,0 @@
-//외부 url 접속 정보 알아오기
-public class new3 {
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
-}

@@ -232,4 +232,5 @@
 <uri name="http://www.w3.org/2001/XInclude" uri="jar:file:/C:/Users/Administrator/.p2/pool/plugins/org.eclipse.wst.xsl.core_1.2.200.v202302070714.jar!/xslt-schemas/xinclude.xsd"/>
 <public publicId="-//SPRING//DTD BEAN 2.0//EN" uri="jar:file:/C:/Users/Administrator/.p2/pool/plugins/org.springframework.beans_4.3.23.20190313-CI.jar!/org/springframework/beans/factory/xml/spring-beans-2.0.dtd"/>
 <public publicId="-//LOG4J//DTD LOG4J//EN" uri="jar:file:/C:/Users/Administrator/.p2/pool/plugins/org.springsource.ide.eclipse.commons.ui_4.14.1.202204250653.jar!/dtd/log4j-1.2.dtd"/>
+<public publicId="-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" uri="jar:file:/C:/Users/Administrator/.p2/pool/plugins/org.mybatis.generator.eclipse.ui_1.4.2.202302200051.jar!/dtds/mybatis-generator-config_1_0.dtd"/>
 </catalog>

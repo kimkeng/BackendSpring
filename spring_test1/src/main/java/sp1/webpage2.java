@@ -22,11 +22,135 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class webpage2 {
 	PrintWriter pw = null;
+	
+	//예약자 리스트 출력 + pageing
+	//required = false(default = true) : GET,POST 해당 변수값에 값이 없을 경우 해당 요구사항을 예외처리 하게 됩니다.
+	@GetMapping("/air_list.do")	//post는 절대 안됨
+	public String air_list(Model m ,@RequestParam(required = false) String page) {
+		System.out.println(page);
+		air_sql as = new air_sql();
+		int vpage = 0;	//페이지 번호 1번 지정
+		if(page == null || page == "null" || page.equals("1") || page=="" ) {
+			vpage = 0;
+		}else {	//1번 페이지 외에 작동되는 범위 사이즈
+			vpage = (Integer.parseInt(page) * 2) - 2 ;
+		}
+		try {
+		//데이터 전체 리스트 view 보내기
+		ArrayList<ArrayList<String>> total_list = as.person_list(vpage);
+		m.addAttribute("total_list",total_list);
+		
+		//총 갯수값 view로 보내기
+		int total_person = as.total_sum("air_person");
+		m.addAttribute("total_person",total_person);
+		
+		}catch(Exception e) {
+			System.out.println("Database 문법 오류!!");
+		}
+		return "/air_list";
+	}
+	
+	@PostMapping("/air_personok.do")
+	public String air_person(Model m,
+			@RequestParam String rcode,
+			@RequestParam String rair,
+			@RequestParam String mid,
+			@RequestParam String mname,
+			@RequestParam String mpost,
+			@RequestParam String mtel,
+			@RequestParam String mperson,
+			@RequestParam String totalmoney
+			) {
+		try {
+		air_sql as = new air_sql();
+		int result = as.perinsert(rcode, rair, mid, mname, mpost, mtel, mperson, totalmoney); 
+		switch(result) {
+			case 1:
+				System.out.println("예매가 완료 되었습니다.");
+				break;
+			case 3:
+				System.out.println("죄송합니다. 여유좌석이 없습니다.");
+				break;
+			default:
+				System.out.println("접속에 문제가 발생 하였습니다.");
+				break;
+		}
+		}catch(Exception e) {
+			System.out.println("DB 입력오류 발생!!");
+		}
+		
+		return null;
+	}
+	
+	
+	@PostMapping("/air_rserveok.do")
+	public String air(Model m, 
+			@RequestParam String rcode,
+			@RequestParam String rair,
+			@RequestParam String rland,
+			@RequestParam String rperson,
+			@RequestParam String rpay,
+			@RequestParam String rstart_date,
+			@RequestParam String rend_date,
+			@RequestParam String rdate
+			) throws Exception {
+		//String rdate_re = rdate.replaceAll("T"," ");	//같은 코드를 여러번 써야해서 simplify.java로 만듦
+		simplify sp = new simplify();
+		rdate = sp.day(rdate);
+		rstart_date = sp.day(rstart_date);
+		rend_date = sp.day(rend_date);
+		
+		air_sql as = new air_sql();
+		int result = as.insert(rcode, rair, rland,rperson, rpay, rstart_date, rend_date,rdate);
+		
+		if(result == 0) {
+			m.addAttribute("msg","비정상 데이터로 인하여 정보가 등록되지 않았습니다.");
+		}else {
+			m.addAttribute("msg","성공적으로 데이터가 입력 되었습니다.");
+		}
+		
+		
+		return "/WEB-INF/jsp/air_reserveok";
+	}
+	
+	//카카오 로그인 및 일반 로그인 응용페이지
+	@PostMapping("/kakao_loginok.do")
+	public String kakaos(HttpServletRequest req, Model m) throws Exception {
+		String part = req.getParameter("part").intern();
+		String kako_id, kako_email, kako_nick, mname, mpass = null;
+		int result = 0;
+		login_etc le = null;
+		
+		if(part=="kakao") {
+			kako_id = req.getParameter("kako_id");
+			kako_email = req.getParameter("kako_email");
+			kako_nick = req.getParameter("kako_nick");			
+			le = new login_etc(kako_id,kako_email,kako_nick,part);
+		}
+		else {
+			mname = req.getParameter("mname");
+			mpass = req.getParameter("mpass");
+			le = new login_etc(mname,mpass,"",part);
+		}
+		le.join();	//Thread 작업이 끝날때 까지 아래의 코드를 활성화 하지 않음
+		
+		result = le.result();	//getter method 에서 결과값을 받는 부분
+		
+		if(result == 1) {
+			System.out.println("정상적으로 회원가입이 되었습니다.");
+		}
+		else {
+			System.out.println("프로세스 오류 발생");
+		}
+		
+		return null;
+	}
 	
 	@PostMapping("/fileok.do")
 	public void upload(MultipartFile mfile, HttpServletRequest req, Model m) throws Exception {

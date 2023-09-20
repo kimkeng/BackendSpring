@@ -1,9 +1,0 @@
-
-public class net2 {
-	//네트워크 기초 외부 이미지 및 동영상 크롤링
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
-}
